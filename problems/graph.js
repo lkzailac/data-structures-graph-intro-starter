@@ -45,34 +45,102 @@ class Graph {
   //should examine key vertex
 
   breadthFirstTraversal(startingVertex) {
-    const visitedQ = [];
-    const allV = [];
-    visited.push(startingVertex);
+    const queue = [];
+    const visited = [];
 
+    queue.push(startingVertex);
 
-    for(let vertex in this.adjList) {
-      //cycle through neighbors
-      //if they havent been visited add them to visited, other wise skip(continue)
-      //console.log(typeof vertex);
+    while(queue.length){
+      const vertex = queue.shift();
 
-      //visit neighbors
-      this.adjList[vertex].forEach(neighbor => {
-        if(!visited.includes(neighbor)) {
-          visited.push(neighbor);
+      if(!visited.includes(vertex)){
+        visited.push(vertex);
+      }
+
+      this.adjList[vertex].forEach(vertex => {
+        if(!visited.includes(vertex)){          
+          queue.push(vertex);
         }
-        //if it has been visited..
       })
+
     }
-    console.log(Array.from(visited));
-    return Array.from(visited);
+
+    return visited;
+
+    //Will iterate through whole adjList
+
+    // for(let vertex in this.adjList) {
+    //   //cycle through neighbors
+    //   //if they havent been visited add them to visited, other wise skip(continue)
+    //   //console.log(typeof vertex);
+
+    //   //visit neighbors
+    //   this.adjList[vertex].forEach(neighbor => {
+    //     if(!visited.includes(neighbor)) {
+    //       visited.push(neighbor);
+    //     }
+    //     //if it has been visited..
+    //   })
+    // }
+    //console.log(visited);
+    
   }
 
   depthFirstTraversalIterative(startingVertex) {
     // Code goes here ...
+
+    let visited = new Set();
+    let stack = [ startingVertex ];
+
+    while (stack.length) {
+
+        let vertex = stack.pop();
+
+        // if this node has already been visited, then skip this node
+        if (visited.has(vertex)) continue;
+
+        // otherwise it hasn't yet been visited,
+        // so print it's val and mark it as visited.
+        //console.log(vertex);
+        visited.add(vertex);
+
+        // then add its neighbors to the stack to be explored
+        stack.push(...this.adjList[vertex]);
+    }
+
+    // const visited = [];
+    // const queue = [];
+
+    // queue.push(startingVertex);
+
+    // while(queue.length){
+    //   //console.log(startingVertex);
+    //   const vertex = queue.shift();
+
+    //   for(let i = this.adjList[vertex].length - 1; i >= 0; i--){
+    //     queue.push(...this.adjList[vertex]);
+    //     let neighbor = this.adjList[vertex][i];
+    //     if(!visited.includes(neighbor)){
+    //       visited.push(neighbor);
+    //       queue = [];
+    //     }
+
+    //     // if(this.adjList[startingVertex].length === 0){
+    //     //   startingVertex = null;
+    //     // }
+    //   }
+    // }
+
+    //console.log(visited);
+
+    return Array.from(visited);
+
+    //console.log(visited);
   }
 
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
     // Code goes here ...
+    
   }
 
 }
